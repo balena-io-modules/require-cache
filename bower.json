@@ -1,0 +1,23 @@
+{
+  "name": "require-cache",
+  "version": "0.0.0",
+  "authors": [
+    "Page <page@resin.io>"
+  ],
+  "description": "A helper to enable caching in require plugins.",
+  "main": "cache.js",
+  "keywords": [
+    "requirejs",
+    "require",
+    "rjs",
+    "cache"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
