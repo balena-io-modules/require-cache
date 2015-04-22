@@ -100,11 +100,17 @@ define(function () {
 				}
 				var path = resolvePath(name, parentRequire);
 				fetchText(path, function (source) {
-					var cached = sessionStorage.getItem(path);
-					if (cached) {
-						cached = JSON.parse(cached);
-					} else {
+					try {
+						var cached = sessionStorage.getItem(path);
+						if (cached) {
+							cached = JSON.parse(cached);
+						} else {
+							cached = {};
+						}
+					}
+					catch(err) {
 						cached = {};
+						console.log(err);
 					}
 	
 					var compiled = cached.compiled;
@@ -127,12 +133,16 @@ define(function () {
 							load.error("In " + path + ", " + err);
 							return;
 						}
-						sessionStorage.setItem(path, JSON.stringify({
-							version: version,
-							compiled: compiled,
-							source: source
-						}));
-
+						try {
+							sessionStorage.setItem(path, JSON.stringify({
+								version: version,
+								compiled: compiled,
+								source: source
+							}));
+						}
+						catch(err) {
+							console.log(err);
+						}
 						//Hold on to the transformed text if a build.
 						if (config.isBuild) {
 							buildMap[name] = compiled;
