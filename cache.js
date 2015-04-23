@@ -61,7 +61,7 @@ define(function () {
 		// end browser.js adapters
 	}
 
-	if (typeof window !== 'undefined' && window.sessionStorage !== 'undefined') {
+	if (typeof window !== 'undefined' && typeof window.sessionStorage !== 'undefined') {
 		sessionStorage = window.sessionStorage;
 	}
 	else {
@@ -100,17 +100,11 @@ define(function () {
 				}
 				var path = resolvePath(name, parentRequire);
 				fetchText(path, function (source) {
-					try {
-						var cached = sessionStorage.getItem(path);
-						if (cached) {
-							cached = JSON.parse(cached);
-						} else {
-							cached = {};
-						}
-					}
-					catch(err) {
+					var cached = sessionStorage.getItem(path);
+					if (cached) {
+						cached = JSON.parse(cached);
+					} else {
 						cached = {};
-						console.log(err);
 					}
 	
 					var compiled = cached.compiled;
@@ -133,16 +127,12 @@ define(function () {
 							load.error("In " + path + ", " + err);
 							return;
 						}
-						try {
-							sessionStorage.setItem(path, JSON.stringify({
-								version: version,
-								compiled: compiled,
-								source: source
-							}));
-						}
-						catch(err) {
-							console.log(err);
-						}
+						sessionStorage.setItem(path, JSON.stringify({
+							version: version,
+							compiled: compiled,
+							source: source
+						}));
+
 						//Hold on to the transformed text if a build.
 						if (config.isBuild) {
 							buildMap[name] = compiled;
