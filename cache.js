@@ -77,7 +77,13 @@ define(function () {
 			},
 			setItem: function (key, value) {
 				db[key] = value;
-				fs.writeFileSync(".cache.json", JSON.stringify(db));
+				try {
+					fs.writeFileSync(".cache.json", JSON.stringify(db));
+				} catch (e) {
+					console.log("Could not save cache.");
+					console.log(e);
+				}
+
 			}
 		};
 	}
