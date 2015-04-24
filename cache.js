@@ -61,7 +61,7 @@ define(function () {
 		// end browser.js adapters
 	}
 
-	if (typeof window !== 'undefined' && typeof window.sessionStorage !== 'undefined') {
+	if (typeof window !== 'undefined' && window.sessionStorage != null) {
 		sessionStorage = window.sessionStorage;
 	}
 	else {
